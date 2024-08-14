@@ -1,7 +1,40 @@
-<section class="text-gray-600 body-font overflow-hidden">
+<section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto">
-    <div class="-my-8 divide-y-2 divide-gray-100">
-      <%= render @tasks %>
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900"><%= @travel_plan.title %></h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base"><%= @travel_plan.note %></p>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+        <%= link_to t('.create_task'), new_travel_plan_task_path, class: "mr-5 hover:text-gray-900" %>
+      </p>
     </div>
+    <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+      <%= render 'shared/search_form' %>
+      <table class="table-auto w-full text-left whitespace-no-wrap ">
+        <thead>
+          <tr>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><%= t('activerecord.attributes.task.title') %></th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"><%= t('activerecord.attributes.task.body') %></th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"><%= t('activerecord.attributes.task.baggage_type') %></th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"><%= t('helpers.submit.edit') %></th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"><%= t('helpers.submit.delete') %></th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"><%= t('activerecord.attributes.task.status_type') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tasks.each do |task| %>
+            <tr>
+              <td class="px-4 py-3"><%= task.title %></td>
+              <td class="px-4 py-3"><%= task.body %></td>
+              <td class="px-4 py-3"><%= t("activerecord.attributes.task.baggage.#{task.baggage}") %></td>
+              <td class="px-4 py-3"><%= link_to t('helpers.submit.edit'), edit_travel_plan_task_path(@travel_plan, task) %></td>
+              <td class="px-4 py-3"><%= link_to t('helpers.submit.delete'), travel_plan_task_path(@travel_plan, task), data: { turbo_method: :delete } %></td>
+              <td class="px-4 py-3"><%= t("activerecord.attributes.task.status.#{task.status}") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= paginate @tasks %>
   </div>
 </section>
+

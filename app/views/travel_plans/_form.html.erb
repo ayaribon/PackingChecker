@@ -1,8 +1,9 @@
 <%= form_with model: travel_plan do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
   <div class="p-2 w-full">
     <div class="relative">
       <div class="mb-3">
-        <%= f.label "旅行タイトル" %>
+        <%= f.label :title %>
         <%= f.text_field :title, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
       </div>
     </div>
@@ -10,7 +11,7 @@
   <div class="p-2 w-full">
     <div class="relative">
       <div class="mb-3">
-          <%= f.label "行き先", class: "leading-7 text-sm text-gray-600" %>
+          <%= f.label :country, class: "leading-7 text-sm text-gray-600" %>
           <%= f.text_field :country, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
       </div>
     </div>
@@ -18,7 +19,7 @@
   <div class="p-2 w-full">
     <div class="relative">
       <div class="mb-3">
-        <%= f.label "メモ", class: "leading-7 text-sm text-gray-600" %>
+        <%= f.label :note, class: "leading-7 text-sm text-gray-600" %>
         <%= f.text_area :note, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out" %>
       </div>
     </div>
@@ -26,7 +27,7 @@
   <div class="p-2 w-full">
     <div class="relative">
       <div class="mb-3">
-        <%= f.label "出発日", class: "leading-7 text-sm text-gray-600" %>
+        <%= f.label :due, class: "leading-7 text-sm text-gray-600" %>
         <%= f.date_field :due, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
       </div>
     </div>

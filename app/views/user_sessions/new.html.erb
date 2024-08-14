@@ -6,17 +6,18 @@
     </div>
     <div class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
       <%= form_with model: @user do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
         <div class="relative mb-4">
-          <%= f.label "メールアドレス", class: "form-label" %>
+          <%= f.label :email, class: "form-label" %>
           <%= f.email_field :email, class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
         </div>
         <div class="relative mb-4">
-          <%= f.label "パスワード", class: "form-label" %>
+          <%= f.label :password, class: "form-label" %>
           <%= f.password_field :password, class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
         </div>
-        <%= f.submit "ログイン", class: "text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"%>
+        <%= f.submit t('.login'), class: "text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"%>
         <div class="text-xs text-gray-500 mt-3">
-          <%= link_to "新規登録はこちら", new_user_path %>
+          <%= link_to t('.to_register_page'), new_user_path %>
         </div>
       <% end %>
     </div>

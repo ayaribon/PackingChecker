@@ -1,0 +1,27 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        email: メールアドレス
+        name: お名前
+        password: パスワード
+        password_confirmation: パスワード確認
+      travel_plan:
+        title: 旅行タイトル
+        note: メモ
+        country: 行き先
+        due: 出発日
+      task:
+        title: 準備するもの
+        body: メモ
+        baggage_type: 荷物の種類
+        status_type: 進捗
+        baggage:
+          carry: 手荷物
+          leave: 預け荷物
+        status:
+          pending: 保留中
+          working: 実行中
+          done: 完了

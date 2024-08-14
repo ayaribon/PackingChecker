@@ -1,10 +1,10 @@
 class TasksController < ApplicationController
   before_action :set_travel_plan
   def index
-    @travel_plan = TravelPlan.find(params[:travel_plan_id])
-    @tasks = @travel_plan.tasks
+    @q = @travel_plan.tasks.ransack(params[:q])
+    @tasks = @q.result.page(params[:page]).order('created_at desc').per(10)
   end
-
+  
   def new
     @task = @travel_plan.tasks.build
   end

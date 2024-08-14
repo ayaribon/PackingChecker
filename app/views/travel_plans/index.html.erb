@@ -1,7 +1,12 @@
-<section class="text-gray-600 body-font overflow-hidden">
+<section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto">
-    <div class="-my-8 divide-y-2 divide-gray-100">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h2 class="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">さあ旅路をはじめよう</h2>
+      <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">TRAVEL PLAN LIST</h1>
+    </div>
+    <div class="flex flex-wrap -m-4">
       <%= render @travel_plans %>
     </div>
+    <%= paginate @travel_plans %>
   </div>
 </section>

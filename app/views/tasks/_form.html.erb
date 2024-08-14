@@ -1,8 +1,9 @@
 <%= form_with model: [@travel_plan, @task] do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
   <div class="p-2 w-full">
     <div class="relative">
       <div class="mb-3">
-        <%= f.label "やること" %>
+        <%= f.label t('activerecord.attributes.task.title') %>
         <%= f.text_field :title, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
       </div>
     </div>
@@ -10,32 +11,24 @@
   <div class="p-2 w-full">
     <div class="relative">
       <div class="mb-3">
-        <%= f.label "荷物の形態", class: "leading-7 text-sm text-gray-600" %>
-        <%= f.select :baggage, Task.baggage.options %>
+        <%= f.label t('activerecord.attributes.task.baggage_type'), class: "leading-7 text-sm text-gray-600" %>
+        <%= f.select :baggage, options_for_select([['手荷物', 'carry'], ['預け荷物', 'leave']], selected: @task.baggage) %>
       </div>
     </div>
   </div>
   <div class="p-2 w-full">
     <div class="relative">
       <div class="mb-3">
-          <%= f.label "具体的に", class: "leading-7 text-sm text-gray-600" %>
-          <%= f.text_area :body, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+        <%= f.label t('activerecord.attributes.task.body'), class: "leading-7 text-sm text-gray-600" %>
+        <%= f.text_area :body, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
       </div>
     </div>
   </div>
   <div class="p-2 w-full">
     <div class="relative">
       <div class="mb-3">
-        <%= f.label "いつまでにやる？", class: "leading-7 text-sm text-gray-600" %>
-        <%= f.date_field :due, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
-      </div>
-    </div>
-  </div>
-  <div class="p-2 w-full">
-    <div class="relative">
-      <div class="mb-3">
-        <%= f.label "進捗", class: "leading-7 text-sm text-gray-600" %>
-        <%= f.select :status, Task.status.options %>
+        <%= f.label t('activerecord.attributes.task.status_type'), class: "leading-7 text-sm text-gray-600" %>
+        <%= f.select :status, options_for_select([['保留中', 'pending'], ['実行中', 'working'],['完了', 'done']], selected: @task.status) %>
       </div>
     </div>
   </div>
