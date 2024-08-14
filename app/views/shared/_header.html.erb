@@ -4,10 +4,13 @@
       <div>
         <%= image_tag 'logo.png', alt: 'Logo', class: 'w-20 h-20 p-2' %>
       </div>
-      <span class="ml-3 text-xl">Packing Checker</span>
+      <span>
+      <%= link_to "Packing Checker", root_path, class: "ml-3 text-xl text-black" %>
+      </span>
     </a>
     <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-      <a class="mr-5 hover:text-gray-900">タスク一覧</a>
+      <%= link_to "タスク作成", new_travel_plan_path, class: "mr-5 hover:text-gray-900" %>
+      <%= link_to "タスク一覧", travel_plans_path, class: "mr-5 hover:text-gray-900" %>
       <a class="mr-5 hover:text-gray-900">Tips</a>
       <a class="mr-5 hover:text-gray-900">サイトの使い方</a>
       <%= link_to "ログアウト", logout_path, class: "mr-5 hover:text-gray-900", data: { turbo_method: :delete } %>
