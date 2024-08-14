@@ -1,22 +1,38 @@
-<%= form_with(model: task) do |form| %>
-  <% if task.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
-      <ul>
-        <% task.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with model: [@travel_plan, @task] do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+        <%= f.label :title, t('activerecord.attributes.task.title') %>
+        <%= f.text_field :title, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
   </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+        <%= f.label :baggage, t('activerecord.attributes.task.baggage_type'), class: "leading-7 text-sm text-gray-600" %>
+        <%= f.select :baggage, options_for_select([['手荷物', 'carry'], ['預け荷物', 'leave']], selected: @task.baggage) %>
+      </div>
+    </div>
+  </div>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+        <%= f.label :body, t('activerecord.attributes.task.body'), class: "leading-7 text-sm text-gray-600" %>
+        <%= f.text_area :body, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+      </div>
+    </div>
+  </div>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+        <%= f.label :status, t('activerecord.attributes.task.status_type'), class: "leading-7 text-sm text-gray-600" %>
+        <%= f.select :status, options_for_select([['保留中', 'pending'], ['実行中', 'working'],['完了', 'done']], selected: @task.status) %>
+      </div>
+    </div>
+  </div>
+  <div class="p-2 w-full">
+    <%= f.submit nil, class: "flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" %>
   </div>
 <% end %>

@@ -50,6 +50,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'rubocop'
+  gem 'faker'
 end
 
 group :test do
@@ -57,3 +59,13 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'sorcery'
+
+gem 'enumerize'
+
+gem 'kaminari'
+
+gem 'rails-i18n', '~> 7.0.0'
+
+gem 'ransack'

@@ -1,0 +1,22 @@
+<header class="text-gray-600 body-font">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+      <div>
+        <%= image_tag 'logo.png', alt: 'Logo', class: 'w-20 h-20 p-2' %>
+      </div>
+      <span>
+      <%= link_to "Packing Checker", root_path, class: "ml-3 text-xl text-black" %>
+      </span>
+    </a>
+    <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+      <%= link_to t('header.create_travel_plan'), new_travel_plan_path, class: "mr-5 hover:text-gray-900" %>
+      <%= link_to t('header.travel_plan_index'), travel_plans_path, class: "mr-5 hover:text-gray-900" %>
+      <a class="mr-5 hover:text-gray-900"><%= t('header.tip') %></a>
+      <a class="mr-5 hover:text-gray-900"><%= t('header.how_to_use') %></a>
+      <%= link_to t('header.logout'), logout_path, class: "mr-5 hover:text-gray-900", data: { turbo_method: :delete } %>
+    </nav>
+    <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+      <%= t('header.profile') %>
+    </button>
+  </div>
+</header>

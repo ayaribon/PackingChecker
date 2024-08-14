@@ -10,10 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_14_114159) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_14_132057) do
   create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
+    t.string "title", null: false
+    t.text "body"
+    t.date "due"
+    t.string "status", default: "pending", null: false
+    t.string "baggage", default: "carry", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "travel_plan_id"
+    t.index ["travel_plan_id"], name: "index_tasks_on_travel_plan_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
+
+  create_table "travel_plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "country"
+    t.text "note"
+    t.date "due"
+    t.bigint "user_id"
+    t.bigint "task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_travel_plans_on_task_id"
+    t.index ["user_id"], name: "index_travel_plans_on_user_id"
+  end
+
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "crypted_password"
+    t.string "salt"
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  add_foreign_key "tasks", "travel_plans"
+  add_foreign_key "tasks", "users"
+  add_foreign_key "travel_plans", "tasks"
+  add_foreign_key "travel_plans", "users"
 end

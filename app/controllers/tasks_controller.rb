@@ -1,70 +1,52 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
-
-  # GET /tasks or /tasks.json
+  before_action :set_travel_plan
   def index
-    @tasks = Task.all
+    @q = @travel_plan.tasks.ransack(params[:q])
+    @tasks = @q.result.page(params[:page]).order('created_at desc').per(10)
   end
-
-  # GET /tasks/1 or /tasks/1.json
-  def show
-  end
-
-  # GET /tasks/new
+  
   def new
-    @task = Task.new
+    @task = @travel_plan.tasks.build
   end
 
-  # GET /tasks/1/edit
-  def edit
-  end
-
-  # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    @task = @travel_plan.tasks.build(task_params)
+    @task.user = current_user
+    if @task.save
+      redirect_to travel_plan_tasks_path(@travel_plan), success: t('tasks.create.success')
+    else
+      flash.now[:danger] = t('tasks.create.failure')
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /tasks/1 or /tasks/1.json
+  def edit
+    @task = @travel_plan.tasks.find(params[:id])
+  end
+
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    @task = @travel_plan.tasks.find(params[:id])
+    if @task.update(task_params)
+      redirect_to travel_plan_tasks_path(@travel_plan), success: t('tasks.update.success')
+    else
+      flash.now[:danger] = t('tasks.update.failure')
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /tasks/1 or /tasks/1.json
   def destroy
-    @task.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    task = @travel_plan.tasks.find(params[:id])
+    task.destroy!
+    redirect_to travel_plan_tasks_path, success: t('travel_plans.destroy.success')
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:name)
-    end
+  def task_params
+    params.require(:task).permit(:title, :body, :status, :baggage, :due)
+  end
+
+  def set_travel_plan
+    @travel_plan = current_user.travel_plans.find(params[:travel_plan_id])
+  end
 end

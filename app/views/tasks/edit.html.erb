@@ -1,12 +1,20 @@
-<% content_for :title, "Editing task" %>
-
-<h1>Editing task</h1>
-
-<%= render "form", task: @task %>
-
-<br>
-
-<div>
-  <%= link_to "Show this task", @task %> |
-  <%= link_to "Back to tasks", tasks_path %>
-</div>
+<section>
+  <div class="relative z-10 container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+    <div class="flex flex-col text-center w-full mb-12">
+      <h1 class="title-font sm:text-4xl text-3xl mb-12 font-medium text-gray-900">
+        <%= t('.subject') %>
+      </h1>
+      <div class="lg:w-1/2 md:w-2/3 mx-auto">
+        <div class="flex-wrap -m-2">
+          <%= render 'form', task: @task %>
+        </div>
+      </div>
+    </div>
+    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+      <h2>荷造りのコツ</h2>
+      <p>• まずはリストを作成する。</p>
+      <p>• 必要最低限の荷物を厳選する。</p>
+      <p>• パッキング時にはスペースを有効活用する。</p>
+    </div>
+  </div>
+</section>

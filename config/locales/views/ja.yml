@@ -1,0 +1,76 @@
+ja:
+  helpers:
+    submit:
+      create: 登録
+      submit: 保存
+      update: 更新
+      edit: 編集
+      delete: 削除
+    label:
+      email: メールアドレス
+      password: パスワード
+  user_sessions:
+    new:
+      title: ログイン
+      login: ログイン
+      to_register_page: 新規登録はこちら
+      password_forget: パスワードをお忘れの方はこちら
+    create:
+      success: ログインしました
+      failure: ログインに失敗しました
+    destroy:
+      success: ログアウトしました
+  users:
+    new:
+      title: ユーザー登録
+    create:
+      success: ユーザー登録が完了しました
+      failure: ユーザー登録に失敗しました
+    update:
+      success: ユーザー編集が完了しました
+      failure: ユーザー編集に失敗しました
+  travel_plans:
+    new:
+      title: 旅行計画作成
+      subject: どんな旅行プランですか？
+    index:
+      title: 旅行計画一覧
+      create_task: 荷造り計画を立てる
+    edit:
+      title: 旅行計画編集
+      subject: どんな旅行プランですか？
+    create:
+      success: 旅行プラン作成に成功しました
+      failure: 旅行プラン作成に失敗しました
+    update:
+      success: 旅行プラン編集に成功しました
+      failure: 旅行プラン編集に失敗しました
+    destroy:
+      success: 旅行プラン削除に成功しました
+  tasks:
+    new:
+      title: 荷造りタスク作成
+      subject: 何を準備しますか？
+    index:
+      title: 荷造りタスク一覧
+      create_task: 荷造りタスクを追加する
+      search: 絞り込み
+    edit:
+      title: 荷造りタスク編集
+      subject: 荷造りの内容を編集
+    create:
+      success: タスク作成に成功しました
+      failure: タスク作成に失敗しました
+    update:
+      success: タスク編集に成功しました
+      failure: タスク編集に失敗しました
+    destroy:
+      success: タスクを削除しました
+  header:
+    login: ログイン
+    logout: ログアウト
+    travel_plan_index: 旅行計画一覧
+    create_travel_plan: 旅行計画を立てる
+    tip: 荷造りのコツ
+    how_to_use: サイトの使い方
+    profile: プロフィール
