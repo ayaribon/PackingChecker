@@ -1,6 +1,6 @@
 class TravelPlansController < ApplicationController
   def index
-    @travel_plans = TravelPlan.all
+    @travel_plans = current_user.travel_plans
   end
 
   def new
@@ -14,6 +14,25 @@ class TravelPlansController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit
+    @travel_plan = current_user.travel_plans.find(params[:id])
+  end
+
+  def update
+    @travel_plan = current_user.travel_plans.find(params[:id])
+    if @travel_plan.update(travel_plan_params)
+      redirect_to travel_plans_path(@travel_plan)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    travel_plan = current_user.travel_plans.find(params[:id])
+    travel_plan.destroy!
+    redirect_to travel_plans_path
   end
 
   private

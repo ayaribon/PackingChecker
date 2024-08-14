@@ -19,5 +19,11 @@
     <p class="text-indigo-500 inline-flex items-center mt-4">
       <%= travel_plan.country %>
     </p>
+    <p class="text-indigo-500 inline-flex items-center mt-4">
+      <%= link_to "編集", edit_travel_plan_path(travel_plan) %>
+    </p>
+    <p class="text-indigo-500 inline-flex items-center mt-4">
+      <%= link_to "削除", travel_plan_path(travel_plan), data: { turbo_method: :delete } %>
+    </p>
   </div>
 </div>
