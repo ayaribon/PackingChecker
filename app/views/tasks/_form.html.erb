@@ -1,0 +1,45 @@
+<%= form_with model: [@travel_plan, @task] do |f| %>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+        <%= f.label "やること" %>
+        <%= f.text_field :title, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+      </div>
+    </div>
+  </div>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+        <%= f.label "荷物の形態", class: "leading-7 text-sm text-gray-600" %>
+        <%= f.select :baggage, Task.baggage.options %>
+      </div>
+    </div>
+  </div>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+          <%= f.label "具体的に", class: "leading-7 text-sm text-gray-600" %>
+          <%= f.text_area :body, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+      </div>
+    </div>
+  </div>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+        <%= f.label "いつまでにやる？", class: "leading-7 text-sm text-gray-600" %>
+        <%= f.date_field :due, class: "w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+      </div>
+    </div>
+  </div>
+  <div class="p-2 w-full">
+    <div class="relative">
+      <div class="mb-3">
+        <%= f.label "進捗", class: "leading-7 text-sm text-gray-600" %>
+        <%= f.select :status, Task.status.options %>
+      </div>
+    </div>
+  </div>
+  <div class="p-2 w-full">
+    <%= f.submit nil, class: "flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" %>
+  </div>
+<% end %>

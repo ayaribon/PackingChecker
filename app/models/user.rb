@@ -8,5 +8,5 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   has_many :travel_plans, dependent: :destroy
-  has_many :tasks, dependent: :destroy
+  has_many :tasks, through: :travel_plans, dependent: :destroy
 end

@@ -14,6 +14,9 @@
       <%= travel_plan.note %>
     </p>
     <p class="text-indigo-500 inline-flex items-center mt-4">
+      <%= link_to "荷造り計画を立てる", new_travel_plan_task_path(travel_plan), class: "mr-5 hover:text-gray-900" %>
+    </p>
+    <p class="text-indigo-500 inline-flex items-center mt-4">
       <%= travel_plan.country %>
     </p>
   </div>

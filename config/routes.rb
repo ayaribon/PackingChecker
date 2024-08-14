@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
 
+  resources :travel_plans, only: %i[index new create show edit destroy update] do
+    resources :tasks
+  end
+
   # Defines the root path route ("/")
   # root "posts#index"
 end

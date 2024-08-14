@@ -1,0 +1,32 @@
+<div class="container px-5 py-24 mx-auto">
+  <div class="-my-8 divide-y-2 divide-gray-100">
+    <% @tasks.each do |task| %>
+      <div class="py-8 flex flex-wrap md:flex-nowrap">
+        <%= form_with model: [@travel_plan, task], local: true do |f| %>
+          <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+            <span class="font-semibold title-font text-gray-700">PACKING TASK</span>
+            <div class="mt-1 text-gray-500 text-sm">
+              <h3>出発日</h3>
+              <span>
+                <%= f.label :status, "進捗状況", class: "leading-7 text-sm text-gray-600" %>
+                <%= f.select :status, Task.status.options, {}, class: "leading-7 text-sm text-gray-600" %>
+              </span>
+            </div>
+          </div>
+          <div class="md:flex-grow">
+            <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">
+              <%= task.title %>
+            </h2>
+            <p class="leading-relaxed">
+              <%= task.body %>
+            </p>
+            <p class="text-indigo-500 inline-flex items-center mt-4">
+              <%= f.label :baggage, "荷物の形態", class: "leading-7 text-sm text-gray-600" %>
+              <%= f.select :baggage, Task.baggage.options, {}, class: "leading-7 text-sm text-gray-600" %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
