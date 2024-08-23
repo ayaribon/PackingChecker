@@ -14,9 +14,16 @@ Rails.application.routes.draw do
   resources :users, only: %i[new create]
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'
-  delete 'logout', to: 'user_sessions#destroy'
+  delete 'logout', to: 'user_sessions#destroy' 
+  get "/choose_template_or_create", to: "travel_plans#choose_template_or_create"
 
-  resources :travel_plans, only: %i[index new create show edit destroy update] do
+  resources :templates, only: [:index, :show] do
+    member do
+      post :create_travel_plan
+    end
+  end  
+
+  resources :travel_plans, only: %i[index new create show edit destroy update choose_template_or_create] do
     resources :tasks
   end
 
