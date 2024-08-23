@@ -11,7 +11,7 @@ class TasksController < ApplicationController
 
   def create
     if params[:task][:template_id].present?
-      template_task = Task.find(params[:task][:template_id])
+      template_task = @travel_plan.tasks.find(params[:task][:template_id])
       @task = template_task.dup
       @task.assign_attributes(task_params)
     else
@@ -44,7 +44,7 @@ class TasksController < ApplicationController
   def destroy
     task = @travel_plan.tasks.find(params[:id])
     task.destroy!
-    redirect_to travel_plan_tasks_path, success: t('travel_plans.destroy.success')
+    redirect_to travel_plan_tasks_path, success: t('tasks.destroy.success')
   end
 
   private

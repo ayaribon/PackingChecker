@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -16,6 +15,8 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy' 
   get "/choose_template_or_create", to: "travel_plans#choose_template_or_create"
+  post 'travel_plans/:id/complete', to: 'travel_plans#complete', as: :complete_packing_travel_plan
+  post 'travel_plans/:id/add_to_template', to: 'travel_plans#add_to_template', as: :add_to_template
 
   resources :templates, only: [:index, :show] do
     member do
@@ -24,8 +25,13 @@ Rails.application.routes.draw do
   end  
 
   resources :travel_plans, only: %i[index new create show edit destroy update] do
-    resources :tasks
+    resources :tasks, only: %i[index new create edit update destroy]
+    member do
+      get 'summary', to: 'travel_plans#summary'
+    end
   end
+  
+  
 
   # Defines the root path route ("/")
   # root "posts#index"
