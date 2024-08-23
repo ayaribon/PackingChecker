@@ -1,0 +1,44 @@
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="text-3xl font-medium title-font mb-4 text-gray-900">荷造りのまとめ</h1>
+    </div>
+    <section class="text-gray-600 body-font">
+      <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-20">
+          <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900"><%= @travel_plan.title %></h1>
+          <p class="lg:w-2/3 mx-auto leading-relaxed text-base"><%= @travel_plan.note %></p>
+       </div>
+       <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+          <table class="table-auto w-full text-left whitespace-no-wrap ">
+            <thead>
+              <tr>
+                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><%= t('activerecord.attributes.task.title') %></th>
+                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"><%= t('activerecord.attributes.task.body') %></th>
+                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"><%= t('activerecord.attributes.task.baggage_type') %></th>
+                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"><%= t('helpers.submit.edit') %></th>
+                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"><%= t('helpers.submit.delete') %></th>
+                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"><%= t('activerecord.attributes.task.status_type') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tasks.each do |task| %>
+                <tr>
+                  <td class="px-4 py-3"><%= task.title %></td>
+                  <td class="px-4 py-3"><%= task.body %></td>
+                  <td class="px-4 py-3"><%= t("activerecord.attributes.task.baggage.#{task.baggage}") %></td>
+                  <td class="px-4 py-3"><%= link_to t('helpers.submit.edit'), edit_travel_plan_task_path(@travel_plan, task) %></td>
+                  <td class="px-4 py-3"><%= link_to t('helpers.submit.delete'), travel_plan_task_path(@travel_plan, task), data: { turbo_method: :delete } %></td>
+                  <td class="px-4 py-3"><%= t("activerecord.attributes.task.status.#{task.status}") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <div class="flex justify-around mb-4">
+      <%= button_to 'テンプレートに追加する', add_to_template_path(@travel_plan), method: :post, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</section>

@@ -33,6 +33,7 @@
           <% end %>
         </tbody>
       </table>
+      <%= button_to '荷造りを完了する', complete_packing_travel_plan_path(@travel_plan), method: :post, class: 'btn btn-primary' %>
     </div>
     <%= paginate @tasks %>
   </div>

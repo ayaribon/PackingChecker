@@ -1,25 +1,19 @@
 <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto">
+  <div class="container px-5 py-4 mx-auto">
     <div class="flex flex-wrap md:flex-nowrap -mx-4 -mb-10 text-center">
       <div class="md:w-1/2 w-full mb-10 px-4">
         <div class="rounded-lg h-64 overflow-hidden">
-          <img alt="content" class="object-cover object-center h-full w-full" src="https://dummyimage.com/1201x501">
+          <%= image_tag 'travel_yellow.png', class: "object-cover object-center h-full w-full px-6", alt: 'hero' %>
         </div>
-        <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Buy YouTube Videos</h2>
-        <p class="leading-relaxed text-base">Williamsburg occupy sustainable snackwave gochujang. Pinterest cornhole brunch, slow-carb neutra irony.</p>
-        <button class="flex mx-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded">
-        <%= link_to 'テンプレートから作成', templates_path(redirect_to: new_travel_plan_path) %>
-      </button>
+        <h2><%= link_to 'テンプレートからつくる', templates_path(redirect_to: new_travel_plan_path), class: "title-font text-2xl font-medium text-gray-900 mt-6 mb-3" %></h2>
+        <p class="leading-relaxed text-base">すでに準備されている荷造りのタスクをそのままコピってペッして自由に編集ができます</p>
       </div>
       <div class="md:w-1/2 w-full mb-10 px-4">
         <div class="rounded-lg h-64 overflow-hidden">
-          <img alt="content" class="object-cover object-center h-full w-full" src="https://dummyimage.com/1202x502">
+          <%= image_tag 'travel_blue.png', class: "object-cover object-center h-full w-full px-4", alt: 'hero' %>
         </div>
-        <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">The Catalyzer</h2>
-        <p class="leading-relaxed text-base">Williamsburg occupy sustainable snackwave gochujang. Pinterest cornhole brunch, slow-carb neutra irony.</p>
-        <button class="flex mx-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded">
-          <%= link_to '一から作成', new_travel_plan_path %>
-        </button>
+        <h2><%= link_to 'イチからつくる', new_travel_plan_path, class:"title-font text-2xl font-medium text-gray-900 mt-6 mb-3" %></h2>
+        <p class="leading-relaxed text-base">旅行に慣れている人向け！何をもっていけばいいかはすでに把握できているぜ！って方はこちら</p>
       </div>
     </div>
   </div>
