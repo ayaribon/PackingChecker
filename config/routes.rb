@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
   end  
 
-  resources :travel_plans, only: %i[index new create show edit destroy update choose_template_or_create] do
+  resources :travel_plans, only: %i[index new create show edit destroy update] do
     resources :tasks
   end
 
