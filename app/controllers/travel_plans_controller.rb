@@ -1,5 +1,5 @@
 class TravelPlansController < ApplicationController
-  before_action :set_template, only: [:new, :create]
+  before_action :set_template, only: [ :new, :create ]
 
   def index
     @travel_plans = TravelPlan.where(user_id: current_user.id).includes(:user).order("created_at DESC").page(params[:page]).per(9)
@@ -12,14 +12,14 @@ class TravelPlansController < ApplicationController
   def create
     @travel_plan = @template ? @template.dup : TravelPlan.new(travel_plan_params)
     @travel_plan.user = current_user # Ensure the current user is associated with the new travel plan
-    
+
     if @travel_plan.save
       if @template
         @template.tasks.each do |task|
           @travel_plan.tasks.create(task.attributes.except("id", "created_at", "updated_at"))
         end
       end
-      redirect_to travel_plan_tasks_path(@travel_plan), success: t('travel_plans.create.success')
+      redirect_to travel_plan_tasks_path(@travel_plan), success: t("travel_plans.create.success")
     else
       render :new, status: :unprocessable_entity
     end
@@ -32,9 +32,9 @@ class TravelPlansController < ApplicationController
   def update
     @travel_plan = current_user.travel_plans.find(params[:id])
     if @travel_plan.update(travel_plan_params)
-      redirect_to travel_plans_path(@travel_plan), success: t('travel_plans.update.success')
+      redirect_to travel_plans_path(@travel_plan), success: t("travel_plans.update.success")
     else
-      flash.now[:danger] = t('travel_plans.update.failure')
+      flash.now[:danger] = t("travel_plans.update.failure")
       render :edit, status: :unprocessable_entity
     end
   end
@@ -42,7 +42,7 @@ class TravelPlansController < ApplicationController
   def destroy
     travel_plan = current_user.travel_plans.find(params[:id])
     travel_plan.destroy!
-    redirect_to travel_plans_path, success: t('travel_plans.destroy.success')
+    redirect_to travel_plans_path, success: t("travel_plans.destroy.success")
   end
 
   def choose_template_or_create; end
@@ -54,14 +54,14 @@ class TravelPlansController < ApplicationController
 
   def add_to_template
     @travel_plan = TravelPlan.find(params[:id])
-    
+
     # 新しいテンプレートを作成
     template = TravelPlan.new(
       title: params[:template_title] || @travel_plan.title,
       user: current_user,
       is_template: true
     )
-  
+
     if template.save
       @travel_plan.tasks.each do |task|
         new_task = template.tasks.create(
@@ -77,10 +77,10 @@ class TravelPlansController < ApplicationController
       redirect_to root_path, notice: "テンプレートに追加しました"
     else
       render :summary, alert: "テンプレートの保存に失敗しました"
-    end    
+    end
   end
-  
-  
+
+
 
   def summary
     @travel_plan = TravelPlan.find(params[:id])

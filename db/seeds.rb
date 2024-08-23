@@ -8,12 +8,12 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # Find or create a user to be the "logged-in" user
-user = User.find_by!(email: "kubotaren5213@docomo.ne.jp") 
-  
+user = User.find_by!(email: "kubotaren5213@docomo.ne.jp")
+
 # Create some travel plans and tasks associated with this user
 20.times do |index|
   travel_plan = user.travel_plans.create!(
-    title: "タイトル#{index}", 
+    title: "タイトル#{index}",
     note: "本文#{index}",
     due: Faker::Date.forward(days: 60)  # Set a due date in the future
   )
