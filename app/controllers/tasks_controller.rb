@@ -10,7 +10,14 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = @travel_plan.tasks.build(task_params)
+    if params[:task][:template_id].present?
+      template_task = Task.find(params[:task][:template_id])
+      @task = template_task.dup
+      @task.assign_attributes(task_params)
+    else
+      @task = @travel_plan.tasks.build(task_params)
+    end
+  
     @task.user = current_user
     if @task.save
       redirect_to travel_plan_tasks_path(@travel_plan), success: t('tasks.create.success')

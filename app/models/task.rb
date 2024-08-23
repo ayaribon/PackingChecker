@@ -12,4 +12,6 @@ class Task < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["baggage", "body", "created_at", "due", "id", "status", "title", "travel_plan_id", "updated_at", "user_id"]
   end
+
+  scope :templates, -> { where(is_template: true) }
 end

@@ -5,14 +5,23 @@ class TravelPlansController < ApplicationController
 
   def new
     @travel_plan = TravelPlan.new
+    if params[:template_id]
+      @template = TravelPlan.find(params[:template_id])
+    end
   end
+  
 
   def create
-    @travel_plan = current_user.travel_plans.build(travel_plan_params)
+    @travel_plan = TravelPlan.new(travel_plan_params)
     if @travel_plan.save
-      redirect_to travel_plans_path, success: t('travel_plans.create.success')
+      if params[:template_id]
+        template = TravelPlan.find(params[:template_id])
+        template.tasks.each do |task|
+          @travel_plan.tasks.create(task.attributes.except("id", "created_at", "updated_at"))
+        end
+      end
+      redirect_to travel_plan_tasks_path(@travel_plan), success: t('travel_plans.create.success')
     else
-      flash.now[:danger] = t('travel_plans.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -36,6 +45,8 @@ class TravelPlansController < ApplicationController
     travel_plan.destroy!
     redirect_to travel_plans_path, success: t('travel_plans.destroy.success')
   end
+
+  def choose_template_or_create; end
 
   private
 
