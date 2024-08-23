@@ -9,29 +9,29 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  root 'static_pages#top'
+  root "static_pages#top"
   resources :users, only: %i[new create]
-  get 'login', to: 'user_sessions#new'
-  post 'login', to: 'user_sessions#create'
-  delete 'logout', to: 'user_sessions#destroy' 
+  get "login", to: "user_sessions#new"
+  post "login", to: "user_sessions#create"
+  delete "logout", to: "user_sessions#destroy"
   get "/choose_template_or_create", to: "travel_plans#choose_template_or_create"
-  post 'travel_plans/:id/complete', to: 'travel_plans#complete', as: :complete_packing_travel_plan
-  post 'travel_plans/:id/add_to_template', to: 'travel_plans#add_to_template', as: :add_to_template
+  post "travel_plans/:id/complete", to: "travel_plans#complete", as: :complete_packing_travel_plan
+  post "travel_plans/:id/add_to_template", to: "travel_plans#add_to_template", as: :add_to_template
 
-  resources :templates, only: [:index, :show] do
+  resources :templates, only: [ :index, :show ] do
     member do
       post :create_travel_plan
     end
-  end  
+  end
 
   resources :travel_plans, only: %i[index new create show edit destroy update] do
     resources :tasks, only: %i[index new create edit update destroy]
     member do
-      get 'summary', to: 'travel_plans#summary'
+      get "summary", to: "travel_plans#summary"
     end
   end
-  
-  
+
+
 
   # Defines the root path route ("/")
   # root "posts#index"

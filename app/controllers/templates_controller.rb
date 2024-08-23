@@ -1,5 +1,5 @@
 class TemplatesController < ApplicationController
-  before_action :set_template, only: [:show, :create_travel_plan]
+  before_action :set_template, only: [ :show, :create_travel_plan ]
 
   # テンプレート一覧の表示
   def index

@@ -6,14 +6,14 @@ class TravelPlan < ApplicationRecord
 
   def self.create_from_template(template_id)
     template = find(template_id)
-  
+
     # 新しい旅行プランをテンプレートから作成
     new_plan = create(
       title: "#{template.title}のコピー",
       user_id: template.user_id,
       is_template: false
     )
-  
+
     # テンプレートのタスクを新しいプランにコピー
     template.tasks.each do |task|
       new_plan.tasks.create(
@@ -24,10 +24,10 @@ class TravelPlan < ApplicationRecord
         due: task.due
       )
     end
-  
+
     new_plan
   end
-  
+
   # テンプレートだけを取得するスコープ
   scope :templates, -> { where(is_template: true) }
 
