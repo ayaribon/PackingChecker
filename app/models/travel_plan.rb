@@ -1,5 +1,5 @@
 class TravelPlan < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: -> { !public? }
   has_many :tasks, dependent: :destroy
 
   validates :title, presence: true
@@ -32,7 +32,7 @@ class TravelPlan < ApplicationRecord
   scope :templates, -> { where(is_template: true) }
 
   # 公開テンプレートを取得するスコープ（ユーザーがnilの場合）
-  scope :public_templates, -> { where(is_template: true, user_id: nil) }
+  scope :public_templates, -> { where(is_template: true, user_id: nil, public: true) }
 
   # ユーザー専用テンプレートを取得するスコープ
   scope :user_templates, ->(user) { where(is_template: true, user_id: user.id) }

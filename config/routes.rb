@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :templates, only: [ :index, :show, :destroy ] do
     member do
       post :create_travel_plan
+      post 'add_task'
     end
   end
 
