@@ -44,6 +44,22 @@ class TemplatesController < ApplicationController
     end
   end
 
+  def destroy
+    @template = TravelPlan.find(params[:id])
+    
+    if @template.user == current_user
+      if @template.destroy
+        flash[:notice] = "テンプレートを削除しました"
+      else
+        flash[:alert] = "テンプレートの削除に失敗しました"
+      end
+    else
+      flash[:alert] = "このテンプレートを削除する権限がありません"
+    end
+    
+    redirect_to templates_path
+  end
+
   private
 
   # テンプレートをセットするメソッド

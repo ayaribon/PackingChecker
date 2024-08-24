@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   post "travel_plans/:id/complete", to: "travel_plans#complete", as: :complete_packing_travel_plan
   post "travel_plans/:id/add_to_template", to: "travel_plans#add_to_template", as: :add_to_template
 
-  resources :templates, only: [ :index, :show ] do
+  resources :templates, only: [ :index, :show, :destroy ] do
     member do
       post :create_travel_plan
     end

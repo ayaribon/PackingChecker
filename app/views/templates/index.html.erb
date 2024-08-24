@@ -18,6 +18,11 @@
                 <%= template.note.presence || '&nbsp;'.html_safe %>
               </p>
             </div>
+            <div class="flex ml-auto space-x-4">
+              <% if template.user == current_user %>
+                <%= button_to t('helpers.submit.delete'), template_path(template), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "text-red-500" %>
+              <% end %>
+            </div>
           </div>
         </div>
       <% end %>
