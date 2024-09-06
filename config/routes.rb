@@ -32,7 +32,24 @@ Rails.application.routes.draw do
     end
   end
 
-
+  namespace :admin do
+    root "dashboards#index"
+    resource :dashboard, only: %i[index]
+    resources :users, only: %i[show index edit update destroy] do
+      resources :travel_plans, only: %i[index new create show edit destroy update] do
+        resources :tasks, only: %i[index new create edit update destroy]
+      end
+    end
+    resources :templates, only: %i[show index new create edit update destroy] do
+      resources :tasks, only: [:destroy]
+      member do
+        post 'add_task'
+      end
+    end
+    get 'login' => 'user_sessions#new', :as => :login
+    post 'login' => "user_sessions#create"
+    delete 'logout' => 'user_sessions#destroy', :as => :logout
+  end
 
   # Defines the root path route ("/")
   # root "posts#index"

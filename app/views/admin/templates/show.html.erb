@@ -1,0 +1,81 @@
+<!-- app/views/admin/templates/show.html.erb -->
+<div class="container mx-auto px-4">
+  <!-- タイトル -->
+  <h1 class="text-2xl font-semibold mb-4">テンプレート詳細: <%= @template.title %></h1>
+
+  <!-- タスク追加フォーム -->
+  <div class="mb-6 p-4 bg-gray-100 border border-gray-200 rounded">
+    <h2 class="text-xl font-semibold mb-4">タスクを追加/編集</h2>
+  
+  <%= form_with(model: @task || Task.new, url: @task.present? ? admin_template_task_path(@template, @task) : add_task_admin_template_path(@template), local: true, class: "space-y-4", method: @task.present? ? :patch : :post) do |f| %>
+    <%= f.hidden_field :id %>
+      
+      <div>
+        <%= f.label :title, "タイトル", class: "block font-medium text-gray-700" %>
+        <%= f.text_field :title, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", required: true %>
+      </div>
+  
+      <div>
+        <%= f.label :body, "内容", class: "block font-medium text-gray-700" %>
+        <%= f.text_area :body, rows: 3, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", required: true %>
+      </div>
+  
+      <div>
+        <%= f.label :status, "ステータス", class: "block font-medium text-gray-700" %>
+        <%= f.select :status, options_for_select([['保留中', 'pending'], ['実行中', 'working'], ['完了', 'done']]), {}, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      </div>
+  
+      <div>
+        <%= f.label :baggage, "荷物", class: "block font-medium text-gray-700" %>
+        <%= f.select :baggage, options_for_select([['手荷物', 'carry'], ['預け荷物', 'leave']]), {}, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      </div>
+  
+      <div>
+        <%= f.submit "タスクを保存", class: "px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+      </div>
+    <% end %>
+  </div>
+  
+
+  <!-- タスク一覧 -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold mb-4">タスク一覧</h2>
+  
+    <table class="min-w-full bg-white border border-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="py-3 px-6 text-left">タイトル</th>
+          <th class="py-3 px-6 text-left">内容</th>
+          <th class="py-3 px-6 text-left">ステータス</th>
+          <th class="py-3 px-6 text-left">荷物</th>
+          <th class="py-3 px-6 text-left">作成日</th>
+          <th class="py-3 px-6 text-left">更新日</th>
+          <th class="py-3 px-6 text-left">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+          <tr class="border-b border-gray-200 hover:bg-gray-50">
+            <td class="py-3 px-6 text-gray-700"><%= task.title %></td>
+            <td class="py-3 px-6 text-gray-700"><%= task.body %></td>
+            <td class="py-3 px-6 text-gray-700"><%= task.status %></td>
+            <td class="py-3 px-6 text-gray-700"><%= task.baggage %></td>
+            <td class="py-3 px-6 text-gray-700"><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+            <td class="py-3 px-6 text-gray-700"><%= task.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+            <td class="py-3 px-6 text-gray-700 flex space-x-2">
+              <!-- 編集ボタン -->
+              <button type="button" onclick="editTask(<%= task.id %>, '<%= j task.title %>', '<%= j task.body %>', '<%= j task.status %>', '<%= j task.baggage %>')" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">編集</button>
+              
+              <!-- 削除ボタン -->
+              <%= button_to "削除", admin_template_task_path(@template, task), method: :delete, class: "px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  
+    <div class="mt-4">
+      <%= paginate @tasks %>
+    </div>
+  </div>
+  

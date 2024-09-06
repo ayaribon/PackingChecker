@@ -9,4 +9,6 @@ class User < ApplicationRecord
 
   has_many :travel_plans, dependent: :destroy
   has_many :tasks, through: :travel_plans, dependent: :destroy
+
+  enum role: { general: 0, admin: 1 }
 end

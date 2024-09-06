@@ -1,0 +1,32 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-semibold mb-6">トラベルプラン一覧</h1>
+
+  <table class="min-w-full bg-white border border-gray-200">
+    <thead>
+      <tr>
+        <th class="px-4 py-2 border-b text-left">タイトル</th>
+        <th class="px-4 py-2 border-b text-left">国</th>
+        <th class="px-4 py-2 border-b text-left">メモ</th>
+        <th class="px-4 py-2 border-b text-left">期限日</th>
+        <th class="px-4 py-2 border-b text-left">作成日</th>
+        <th class="px-4 py-2 border-b text-left">更新日</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @travel_plans.each do |plan| %>
+        <tr>
+          <td class="px-4 py-2 border-b"><%= link_to plan.title, admin_user_travel_plan_tasks_path(plan.user, plan), class: "mr-5 hover:text-gray-900" %></td>
+          <td class="px-4 py-2 border-b"><%= plan.country %></td>
+          <td class="px-4 py-2 border-b"><%= plan.note %></td>
+          <td class="px-4 py-2 border-b"><%= plan.due %></td>
+          <td class="px-4 py-2 border-b"><%= plan.created_at.strftime('%Y-%m-%d') %></td>
+          <td class="px-4 py-2 border-b"><%= plan.updated_at.strftime('%Y-%m-%d') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="mt-6">
+    <%= paginate @travel_plans %>
+  </div>
+</div>
