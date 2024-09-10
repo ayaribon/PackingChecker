@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :tasks, only: %i[index new create edit update destroy]
     member do
       get "summary", to: "travel_plans#summary"
+      post 'add_task'
     end
   end
 

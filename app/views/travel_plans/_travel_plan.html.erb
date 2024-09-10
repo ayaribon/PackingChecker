@@ -9,7 +9,7 @@
         <%= image_tag 'airplane.png'%>
       </div>
       <span class="text-gray-900 text-lg title-font font-medium px-8">
-        <%= link_to travel_plan.title, travel_plan_tasks_path(travel_plan) %>
+        <%= link_to travel_plan.title, travel_plan_path(travel_plan) %>
       </span>
     </div>
     <div class="flex-grow">
@@ -18,7 +18,7 @@
         <%= travel_plan.note.presence || '&nbsp;'.html_safe %> 
       </p>
       <div class="mt-3 text-indigo-500 flex justify-between">
-        <%= link_to t('travel_plans.index.create_task'), new_travel_plan_task_path(travel_plan) %>
+        <%= link_to t('travel_plans.index.create_task'), travel_plan_path(travel_plan) %>
         <div class="flex ml-auto space-x-4">
           <%= link_to t('helpers.submit.edit'), edit_travel_plan_path(travel_plan) %>
           <%= link_to t('helpers.submit.delete'), travel_plan_path(travel_plan), data: { turbo_method: :delete } %>
