@@ -54,7 +54,15 @@ class TravelPlansController < ApplicationController
   def choose_template_or_create; end
 
   def complete
-    @travel_plan = TravelPlan.find(params[:id])
+    @travel_plan = current_user.travel_plans.find(params[:id])
+  
+    # すべてのタスクを完了状態にする
+    @travel_plan.tasks.update_all(status: 'done')
+  
+    # トラベルプランを完了済みにマーク
+    @travel_plan.update(completed: true)
+  
+    # 完了画面にリダイレクト
     redirect_to summary_travel_plan_path(@travel_plan), notice: "荷造りが完了しました"
   end
 

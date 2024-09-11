@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     member do
       get "summary", to: "travel_plans#summary"
       post 'add_task'
+      post :complete
     end
   end
 

@@ -4,6 +4,10 @@ class TravelPlan < ApplicationRecord
 
   validates :title, presence: true
 
+  def check_completion!
+    update(completed: tasks.all? { |task| task.status == 'done' })
+  end
+
   def self.create_from_template(template_id)
     template = find(template_id)
 
