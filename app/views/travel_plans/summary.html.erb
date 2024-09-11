@@ -31,8 +31,11 @@
         </div>
       </div>
     </section>
-    <div class="flex justify-around mb-4">
-      <%= button_to 'テンプレートに追加する', add_to_template_path(@travel_plan), method: :post, class: 'btn btn-primary' %>
+    <div class="flex justify-around mb-4 space-x-4">
+      <%= button_to 'テンプレートに追加する', add_to_template_path(@travel_plan), method: :post, class: 'px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500' %>
+      <% if @travel_plan.completed? %>
+        <%= button_to '荷造りをやり直す', reopen_travel_plan_path(@travel_plan), method: :post, class: 'px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500' %>
+      <% end %>
     </div>
   </div>
 </section>

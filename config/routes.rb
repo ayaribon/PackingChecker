@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get "summary", to: "travel_plans#summary"
       post 'add_task'
       post :complete
+      post :reopen
     end
   end
 

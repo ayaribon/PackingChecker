@@ -5,7 +5,8 @@
         完了済み
       </div>
     <% end %>
-    <a href="<%= travel_plan_path(travel_plan) %>" class="absolute inset-0"></a>
+    <!-- 完了済みのトラベルプラン用の条件付きリンク先 -->
+    <a href="<%= travel_plan.completed? ? summary_travel_plan_path(travel_plan) : travel_plan_path(travel_plan) %>" class="absolute inset-0"></a>
     <div class="flex flex-col h-full">
       <a class="inline-flex sm:ml-auto sm:mt-0 justify-center sm:justify-start">
         <h4>出発日：</h4>
@@ -16,7 +17,7 @@
           <%= image_tag 'airplane.png'%>
         </div>
         <span class="text-gray-900 text-lg title-font font-medium px-8">
-          <%= link_to travel_plan.title, travel_plan_path(travel_plan), class: 'hover:underline' %>
+          <%= link_to travel_plan.title, travel_plan.completed? ? summary_travel_plan_path(travel_plan) : travel_plan_path(travel_plan), class: 'hover:underline' %>
         </span>
       </div>
       <div class="flex-grow">

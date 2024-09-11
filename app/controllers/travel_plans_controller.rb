@@ -66,6 +66,15 @@ class TravelPlansController < ApplicationController
     redirect_to summary_travel_plan_path(@travel_plan), notice: "荷造りが完了しました"
   end
 
+  def reopen
+    @travel_plan = TravelPlan.find(params[:id])
+    if @travel_plan.update(completed: false)
+      redirect_to travel_plan_path(@travel_plan), notice: '荷造りが未完了に戻されました。'
+    else
+      redirect_to summary_travel_plan_path(@travel_plan), alert: '旅行計画の更新に失敗しました。'
+    end
+  end
+
   def add_to_template
     @travel_plan = TravelPlan.find(params[:id])
 
