@@ -7,10 +7,16 @@
     <div class="flex flex-wrap -m-4">
       <% @user_templates.each do |template| %>
         <div class="p-4 md:w-1/3">
-          <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
+          <!-- リンク全体をテンプレートとして扱う -->
+          <a href="<%= template_path(template) %>" class="relative flex rounded-lg h-full bg-white border border-gray-200 shadow-md p-8 flex-col transition-transform transform hover:scale-105 hover:shadow-lg hover:bg-gray-100">
+            <% if template.user == current_user %>
+              <div class="absolute top-0 right-0 mt-4 mr-4">
+                <%= button_to t('helpers.submit.delete'), template_path(template), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "text-red-500 hover:text-red-700" %>
+              </div>
+            <% end %>
             <div class="flex items-center mb-3">
               <span class="text-gray-900 text-lg title-font font-medium px-8">
-                <%= link_to template.title, template_path(template) %>
+                <%= template.title %>
               </span>
             </div>
             <div class="flex-grow">
@@ -18,15 +24,16 @@
                 <%= template.note.presence || '&nbsp;'.html_safe %>
               </p>
             </div>
-          </div>
+          </a>
         </div>
       <% end %>
       <% @public_templates.each do |template| %>
         <div class="p-4 md:w-1/3">
-          <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
+          <!-- リンク全体をテンプレートとして扱う -->
+          <a href="<%= template_path(template) %>" class="relative flex rounded-lg h-full bg-white border border-gray-200 shadow-md p-8 flex-col transition-transform transform hover:scale-105 hover:shadow-lg hover:bg-gray-100">
             <div class="flex items-center mb-3">
               <span class="text-gray-900 text-lg title-font font-medium px-8">
-                <%= link_to template.title, template_path(template) %>
+                <%= template.title %>
               </span>
             </div>
             <div class="flex-grow">
@@ -34,7 +41,7 @@
                 <%= template.note.presence || '&nbsp;'.html_safe %>
               </p>
             </div>
-          </div>
+          </a>
         </div>
       <% end %>
     </div>

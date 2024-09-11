@@ -5,6 +5,12 @@ class TravelPlansController < ApplicationController
     @travel_plans = TravelPlan.where(user_id: current_user.id).includes(:user).order("created_at DESC").page(params[:page]).per(9)
   end
 
+  def show
+    @travel_plan = current_user.travel_plans.find(params[:id])
+    @q = @travel_plan.tasks.ransack(params[:q])
+    @tasks = @q.result.page(params[:page]).order("created_at desc").per(10)
+  end
+
   def new
     @travel_plan = @template ? @template.dup : TravelPlan.new
   end
@@ -19,7 +25,7 @@ class TravelPlansController < ApplicationController
           @travel_plan.tasks.create(task.attributes.except("id", "created_at", "updated_at"))
         end
       end
-      redirect_to travel_plan_tasks_path(@travel_plan), success: t("travel_plans.create.success")
+      redirect_to travel_plan_path(@travel_plan), success: t("travel_plans.create.success")
     else
       render :new, status: :unprocessable_entity
     end
@@ -48,8 +54,25 @@ class TravelPlansController < ApplicationController
   def choose_template_or_create; end
 
   def complete
-    @travel_plan = TravelPlan.find(params[:id])
+    @travel_plan = current_user.travel_plans.find(params[:id])
+  
+    # すべてのタスクを完了状態にする
+    @travel_plan.tasks.update_all(status: 'done')
+  
+    # トラベルプランを完了済みにマーク
+    @travel_plan.update(completed: true)
+  
+    # 完了画面にリダイレクト
     redirect_to summary_travel_plan_path(@travel_plan), notice: "荷造りが完了しました"
+  end
+
+  def reopen
+    @travel_plan = TravelPlan.find(params[:id])
+    if @travel_plan.update(completed: false)
+      redirect_to travel_plan_path(@travel_plan), notice: '荷造りが未完了に戻されました。'
+    else
+      redirect_to summary_travel_plan_path(@travel_plan), alert: '旅行計画の更新に失敗しました。'
+    end
   end
 
   def add_to_template
@@ -80,7 +103,27 @@ class TravelPlansController < ApplicationController
     end
   end
 
-
+  def add_task
+    @travel_plan = current_user.travel_plans.find(params[:id])
+  
+    if params[:task][:id].present?
+      # 既存タスクの更新
+      @task = @travel_plan.tasks.find(params[:task][:id])
+      if @task.update(task_params)
+        redirect_to travel_plan_path(@travel_plan), notice: "タスクが更新されました"
+      else
+        render :show, alert: "タスクの更新に失敗しました"
+      end
+    else
+      # 新規タスクの作成
+      @task = @travel_plan.tasks.build(task_params)
+      if @task.save
+        redirect_to travel_plan_path(@travel_plan), notice: "タスクが追加されました"
+      else
+        render :show, alert: "タスクの作成に失敗しました"
+      end
+    end
+  end
 
   def summary
     @travel_plan = TravelPlan.find(params[:id])
@@ -98,5 +141,10 @@ class TravelPlansController < ApplicationController
       @template = TravelPlan.find_by(id: params[:template_id])
       redirect_to travel_plans_path, alert: "テンプレートが見つかりませんでした" unless @template
     end
+  end
+
+  # タスクに関連するパラメータ
+  def task_params
+    params.require(:task).permit(:title, :body, :status, :baggage)
   end
 end

@@ -18,9 +18,10 @@ Rails.application.routes.draw do
   post "travel_plans/:id/complete", to: "travel_plans#complete", as: :complete_packing_travel_plan
   post "travel_plans/:id/add_to_template", to: "travel_plans#add_to_template", as: :add_to_template
 
-  resources :templates, only: [ :index, :show ] do
+  resources :templates, only: [ :index, :show, :destroy ] do
     member do
       post :create_travel_plan
+      post 'add_task'
     end
   end
 
@@ -28,10 +29,30 @@ Rails.application.routes.draw do
     resources :tasks, only: %i[index new create edit update destroy]
     member do
       get "summary", to: "travel_plans#summary"
+      post 'add_task'
+      post :complete
+      post :reopen
     end
   end
 
-
+  namespace :admin do
+    root "dashboards#index"
+    resource :dashboard, only: %i[index]
+    resources :users, only: %i[show index edit update destroy] do
+      resources :travel_plans, only: %i[index new create show edit destroy update] do
+        resources :tasks, only: %i[index new create edit update destroy]
+      end
+    end
+    resources :templates, only: %i[show index new create edit update destroy] do
+      resources :tasks, only: [:destroy]
+      member do
+        post 'add_task'
+      end
+    end
+    get 'login' => 'user_sessions#new', :as => :login
+    post 'login' => "user_sessions#create"
+    delete 'logout' => 'user_sessions#destroy', :as => :logout
+  end
 
   # Defines the root path route ("/")
   # root "posts#index"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_23_011046) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_11_062912) do
   create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
     t.text "body"
@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_23_011046) do
     t.datetime "updated_at", null: false
     t.bigint "travel_plan_id"
     t.boolean "is_template"
+    t.boolean "public", default: false
     t.index ["travel_plan_id"], name: "index_tasks_on_travel_plan_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
@@ -36,6 +37,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_23_011046) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_template", default: false, null: false
+    t.boolean "public", default: false
+    t.boolean "completed", default: false
     t.index ["task_id"], name: "index_travel_plans_on_task_id"
     t.index ["user_id"], name: "index_travel_plans_on_user_id"
   end
@@ -47,6 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_23_011046) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

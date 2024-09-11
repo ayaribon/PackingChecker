@@ -1,0 +1,21 @@
+<%= render 'shared/flash_message' %>
+<section class="text-gray-600 body-font">
+  <div class="container mx-auto flex flex-col items-center justify-center min-h-screen">
+    <div class="bg-gray-100 rounded-lg p-8 max-w-lg mt-8">
+      <%= form_with url: admin_login_path, data: { turbo: false } do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <div class="relative mb-4">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+        </div>
+        <div class="relative mb-4">
+          <%= f.label :password, class: "form-label" %>
+          <%= f.password_field :password, class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+        </div>
+        <%= f.submit "ログイン", class: "text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"%>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+

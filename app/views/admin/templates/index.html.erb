@@ -1,0 +1,33 @@
+<div class="container mx-auto px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold">公開テンプレート一覧</h1>
+    <%= link_to '新しいテンプレートを作成', new_admin_template_path, class: 'bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded' %>
+  </div>
+
+  <table class="min-w-full bg-white border border-gray-200">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 bg-gray-100 border-b text-left text-gray-600 font-semibold">タイトル</th>
+        <th class="py-2 px-4 bg-gray-100 border-b text-left text-gray-600 font-semibold">国</th>
+        <th class="py-2 px-4 bg-gray-100 border-b text-left text-gray-600 font-semibold">ノート</th>
+        <th class="py-2 px-4 bg-gray-100 border-b text-left text-gray-600 font-semibold">作成日</th>
+        <th class="py-2 px-4 bg-gray-100 border-b text-left text-gray-600 font-semibold">更新日</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @templates.each do |template| %>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="py-2 px-4"><%= link_to template.title, admin_template_path(template) %></td>
+          <td class="py-2 px-4"><%= template.country %></td>
+          <td class="py-2 px-4"><%= template.note %></td>
+          <td class="py-2 px-4"><%= template.created_at.strftime("%Y-%m-%d") %></td>
+          <td class="py-2 px-4"><%= template.updated_at.strftime("%Y-%m-%d") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="mt-4">
+    <%= paginate @templates %>
+  </div>
+</div>

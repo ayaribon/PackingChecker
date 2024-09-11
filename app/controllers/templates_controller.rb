@@ -1,5 +1,17 @@
 class TemplatesController < ApplicationController
-  before_action :set_template, only: [ :show, :create_travel_plan ]
+  before_action :set_template, only: [ :show, :create_travel_plan, :add_task, :destroy ]
+
+  def create
+    @template = TravelPlan.new(template_params)
+    @template.user = current_user
+    @template.public = true # 公開テンプレートとして作成する
+
+    if @template.save
+      redirect_to @template, notice: "公開テンプレートが作成されました"
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
 
   # テンプレート一覧の表示
   def index
@@ -44,6 +56,32 @@ class TemplatesController < ApplicationController
     end
   end
 
+  def add_task
+    @task = @template.tasks.new(task_params)
+
+    if @task.save
+      redirect_to template_path(@template), notice: 'タスクが追加されました。'
+    else
+      redirect_to template_path(@template), alert: 'タスクの追加に失敗しました。'
+    end
+  end
+
+  def destroy
+    @template = TravelPlan.find(params[:id])
+    
+    if @template.user == current_user
+      if @template.destroy
+        flash[:notice] = "テンプレートを削除しました"
+      else
+        flash[:alert] = "テンプレートの削除に失敗しました"
+      end
+    else
+      flash[:alert] = "このテンプレートを削除する権限がありません"
+    end
+    
+    redirect_to templates_path
+  end
+
   private
 
   # テンプレートをセットするメソッド
@@ -52,5 +90,9 @@ class TemplatesController < ApplicationController
     unless @template
       redirect_to templates_path, alert: "テンプレートが見つかりませんでした"
     end
+  end
+
+  def task_params
+    params.require(:task).permit(:title, :body, :status, :baggage, :due)
   end
 end
