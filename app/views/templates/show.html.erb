@@ -6,7 +6,7 @@
     </div>
     <div class="lg:w-2/3 w-full mx-auto overflow-auto">
       <%= render 'shared/search_form' %>
-      <table class="table-auto w-full text-left whitespace-no-wrap ">
+      <table class="table-auto w-full text-left whitespace-no-wrap">
         <thead>
           <tr>
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><%= t('activerecord.attributes.task.title') %></th>
@@ -26,7 +26,9 @@
           <% end %>
         </tbody>
       </table>
-      <%= button_to 'このテンプレートで準備をする', create_travel_plan_template_path(@template), method: :post %>
+      <div class="flex justify-center mt-8">
+        <%= button_to 'このテンプレートで準備をする', create_travel_plan_template_path(@template), method: :post, class: "bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
+      </div>
     </div>
   </div>
 </section>
