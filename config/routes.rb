@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   root "static_pages#top"
+  get "top", to: "static_pages#top"
   resources :users, only: %i[new create]
   get "login", to: "user_sessions#new"
   post "login", to: "user_sessions#create"

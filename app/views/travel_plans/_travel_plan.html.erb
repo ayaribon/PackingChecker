@@ -26,8 +26,11 @@
         </p>
         <div class="mt-3 text-indigo-500 flex justify-between">
           <div class="flex ml-auto space-x-4 z-10">
-            <%= link_to t('helpers.submit.edit'), edit_travel_plan_path(travel_plan), class: 'inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700' %>
-            <%= link_to t('helpers.submit.delete'), travel_plan_path(travel_plan), method: :delete, data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: 'inline-flex items-center px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700' %>
+            <% if travel_plan.completed? %>
+            <% else %>
+              <%= link_to t('helpers.submit.edit'), edit_travel_plan_path(travel_plan), class: 'inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700' %>
+              <%= link_to t('helpers.submit.delete'), travel_plan_path(travel_plan), method: :delete, data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: 'inline-flex items-center px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700' %>
+            <% end %>
           </div>
         </div>
       </div>
