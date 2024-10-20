@@ -1,0 +1,30 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-semibold mb-6">ユーザー一覧</h1>
+
+  <div class="bg-white shadow-md rounded my-6 overflow-x-auto">
+    <table class="min-w-full bg-white">
+      <thead>
+        <tr>
+          <th class="py-3 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-600 text-left">ID</th>
+          <th class="py-3 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-600 text-left">Name</th>
+          <th class="py-3 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-600 text-left">Role</th>
+          <th class="py-3 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-600 text-left">Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr class="border-b border-gray-200 hover:bg-gray-50">
+            <td class="py-3 px-6 text-gray-700"><%= user.id %></td>
+            <td class="py-3 px-6 text-gray-700"><%= link_to user.name, admin_user_travel_plans_path(user), class: "mr-5 hover:text-gray-900" %></td>
+            <td class="py-3 px-6 text-gray-700"><%= user.role %></td>
+            <td class="py-3 px-6 text-gray-700"><%= user.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-4">
+    <%= paginate @users %>
+  </div>
+</div>

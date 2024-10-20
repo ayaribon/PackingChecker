@@ -1,0 +1,17 @@
+<h1><%= @packing_tip.new_record? ? '新しい荷造りのコツを作成' : '荷造りのコツを編集' %></h1>
+
+<%= form_with(model: @packing_tip, url: @packing_tip.new_record? ? admin_packing_tips_path : admin_packing_tip_path(@packing_tip), local: true) do |form| %>
+  <div>
+    <%= form.label :title, 'タイトル' %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :content, '内容' %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div>
+    <%= form.submit '保存する', class: 'btn btn-primary' %>
+  </div>
+<% end %>

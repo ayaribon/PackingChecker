@@ -1,0 +1,80 @@
+<!-- app/views/admin/templates/show.html.erb -->
+<div class="container mx-auto px-4">
+  <!-- タイトル -->
+  <h1 class="text-2xl font-semibold mb-4">旅行プラン: <%= @travel_plan.title %></h1>
+  <%= @travel_plan.note %>
+
+  <!-- タスク追加フォーム -->
+  <div class="mt-6 mb-6 p-4 bg-gray-100 border border-gray-200 rounded">
+    <h2 class="text-xl font-semibold mb-4">タスクを追加/編集</h2>
+  
+    <%= form_with(model: @task || Task.new, url: @task.present? ? travel_plan_task_path(@travel_plan, @task) : add_task_travel_plan_path(@travel_plan), local: true, class: "space-y-4", method: @task.present? ? :patch : :post) do |f| %>
+      <%= f.hidden_field :id %>
+      
+        <div>
+          <%= f.label :title, "タイトル", class: "block font-medium text-gray-700" %>
+          <%= f.text_field :title, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", required: true %>
+        </div>
+  
+        <div>
+          <%= f.label :body, "内容", class: "block font-medium text-gray-700" %>
+          <%= f.text_area :body, rows: 3, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+  
+        <div>
+          <%= f.label :status, "進捗状況", class: "block font-medium text-gray-700" %>
+          <%= f.select :status, options_for_select([['保留中', 'pending'], ['実行中', 'working'], ['完了', 'done']]), {}, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+  
+        <div>
+          <%= f.label :baggage, "荷物", class: "block font-medium text-gray-700" %>
+          <%= f.select :baggage, options_for_select([['手荷物', 'carry'], ['預け荷物', 'leave']]), {}, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+  
+        <div>
+          <%= f.submit "タスクを保存", class: "px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+        </div>
+      <% end %>
+    </div>
+  
+
+    <!-- タスク一覧 -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold mb-4">荷造りタスク一覧</h2>
+      <%= render 'shared/search_form' %>
+  
+      <table class="min-w-full bg-white border border-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="py-3 px-6 text-left">タイトル</th>
+            <th class="py-3 px-6 text-left">内容</th>
+            <th class="py-3 px-6 text-left">荷物</th>
+            <th class="py-3 px-6 text-left">進捗状況</th>
+            <th class="py-3 px-6 text-left">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tasks.each do |task| %>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6 text-gray-700"><%= task.title %></td>
+              <td class="py-3 px-6 text-gray-700"><%= task.body %></td>
+              <td class="py-3 px-6 text-gray-700"><%= t("activerecord.attributes.task.baggage.#{task.baggage}") %></td>
+              <td class="py-3 px-6 text-gray-700"><%= t("activerecord.attributes.task.status.#{task.status}") %></td>
+              <td class="py-3 px-6 text-gray-700 flex space-x-2">
+              <!-- 編集ボタン -->
+              <button type="button" onclick="editTask(<%= task.id %>, '<%= j task.title %>', '<%= j task.body %>', '<%= j task.status %>', '<%= j task.baggage %>')" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">編集</button>
+              
+              <!-- 削除ボタン -->
+              <%= button_to "削除", travel_plan_task_path(@travel_plan, task), method: :delete, class: "px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= button_to '荷造りを完了する', complete_packing_travel_plan_path(@travel_plan), method: :post, class: 'mt-6 px-6 py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-lg shadow-md hover:from-green-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300 ease-in-out' %>
+      <div class="mt-4">
+        <%= paginate @tasks %>
+      </div>
+    </div>
+  </div>
+</div>

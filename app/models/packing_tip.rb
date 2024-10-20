@@ -1,0 +1,2 @@
+class PackingTip < ApplicationRecord
+end
