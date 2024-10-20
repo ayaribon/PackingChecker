@@ -1,0 +1,27 @@
+<h1>荷造りのコツ一覧</h1>
+
+<%= link_to '新しいコツを作成', new_admin_packing_tip_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>本文</th>
+      <th>画像</th>
+      <th>アクション</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @packing_tips.each do |tip| %>
+      <tr>
+        <td><%= tip.title %></td>
+        <td><%= truncate(tip.body, length: 100) %></td>
+        <td><%= image_tag(tip.image, size: "100x100") if tip.image.present? %></td>
+        <td>
+          <%= link_to '編集', edit_admin_packing_tip_path(tip), class: 'btn btn-warning' %>
+          <%= link_to '削除', admin_packing_tip_path(tip), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
