@@ -38,7 +38,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboards#index"
     resource :dashboard, only: %i[index]
-    resources :users, only: %i[show index edit update destroy] do
+    resources :packing_tips
+    resources :users, only: %i[new create show index edit update destroy] do
       resources :travel_plans, only: %i[index new create show edit destroy update] do
         resources :tasks, only: %i[index new create edit update destroy]
       end
