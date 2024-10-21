@@ -15,7 +15,7 @@ class TasksController < ApplicationController
       redirect_to travel_plan_path(@travel_plan), success: t("tasks.create.success")
     else
       flash.now[:danger] = t("tasks.create.failure")
-      render :new, status: :unprocessable_entity
+      render 'travel_plans/show', status: :unprocessable_entity
     end
   end
 
