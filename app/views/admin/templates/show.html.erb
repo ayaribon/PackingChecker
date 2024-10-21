@@ -12,12 +12,12 @@
       
         <div>
           <%= f.label :title, "タイトル", class: "block font-medium text-gray-700" %>
-          <%= f.text_field :title, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", required: true %>
+          <%= f.text_field :title, maxlength: 10, placeholder: "10文字以内で入力してください", class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", required: true %>
         </div>
   
         <div>
           <%= f.label :body, "内容", class: "block font-medium text-gray-700" %>
-          <%= f.text_area :body, rows: 3, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+          <%= f.text_area :body, rows: 2, maxlength: 30, placeholder: "30文字以内で入力してください", class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
         </div>
   
         <div>
